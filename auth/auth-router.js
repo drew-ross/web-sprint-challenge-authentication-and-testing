@@ -2,6 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const usersDb = require('./usersModel');
 const jwt = require('jsonwebtoken');
+const constants = require('../config/constants');
 
 router.post('/register', (req, res) => {
   const { username, password } = req.body;
@@ -38,7 +39,7 @@ function signToken(user) {
     subject: user.id,
     username: user.username,
   };
-  const secret = 'px%3aE!jHA7RWqx';
+  const secret = constants.jwtSecret;
   const options = {
     expiresIn: '1d'
   };
