@@ -9,7 +9,7 @@ module.exports = {
 function register(user) {
   return db('users')
     .insert(user)
-    .then(id => findBy({ id }))
+    .then(id => id)
     .catch(err => console.log(err));
 };
 
