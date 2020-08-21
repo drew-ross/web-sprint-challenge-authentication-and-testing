@@ -41,4 +41,28 @@ describe('authorization', () => {
         .catch(err => console.log(err));
     });
   });
+  
+  describe('login', () => {
+    it('can login user, get token', async () => {
+      let users = await db('users');
+      expect(users).toHaveLength(1);
+
+      await supertest(server)
+        .post('/api/auth/login')
+        .send({ username: 'testuser', password: 'password' })
+        .then(res => {
+          expect(res.body).toHaveProperty('token');
+        })
+        .catch(err => console.log(err));
+    });
+    it('returns 200', async () => {
+      await supertest(server)
+        .post('/api/auth/login')
+        .send({ username: 'testuser', password: 'password' })
+        .then(res => {
+          expect(res.status).toBe(200);
+        })
+        .catch(err => console.log(err));
+    });
+  });
 });
